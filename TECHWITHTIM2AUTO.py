@@ -3,7 +3,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 
-#OPENS UP TECHWITHTIM, SEARCHES PYTHON, GIVES LIST AND DESCRIPTION OF POPUPS, ALLOWS YOU TO INPUT TO CLICK
+#OPENS UP TECHWITHTIM, INPUT SEARCH, CHOOSE PREFERED ARTICLE.
+#HANDLES CASES: 0 articles, and 1 to 10 articles.
+
 class ChromeAuto:
     def __init__(self):
         self.driver_path = '/Users/Blaustein/desktop/chromedriver102'
@@ -205,11 +207,15 @@ class ChromeAuto:
                 links['10'] = link1
             except:
                 pass
+
             print("Which article would you like to proceed to? Please type in Number: ")
             article = int(input())
-            for i in range(len(links)):
-                if article == i:
-                    links[str(article)].click()
+            if article > 0 and article < 11:
+                for i in range(len(links)):
+                    if article == i:
+                        links[str(article)].click()
+            else:
+                return False
             return True
         except:
             return False
@@ -240,7 +246,10 @@ if __name__ == '__main__':
     if driver.click_link() == True:
         pass
     else:
-        print("No Links")
+        print("No Links or Link Out Of Bounds")
 
 #The problem is that if selenium attempts to grab an element and its not there, the compiler receives an error. 
 #Maybe TRY blocks, because they are able to cirumvent error. 
+
+#When I type 11, the program does not care, because I place the length of the LinksList as the condtion. Thus, it does fail and 
+#returns true. Because if no links, length is zero, for loop never runs, no index out of bounds. 
